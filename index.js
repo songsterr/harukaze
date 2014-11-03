@@ -10,15 +10,16 @@ module.exports = {
 		return result;
 	},
 
-	createAction: function (f) {
-		var result = {
+	createAction: function (spec) {
+		var base = {};
+		var action = {
 			feed: new Bacon.Bus(),
 			perform: function () {
-				var promise = f.apply(null, arguments);
-				result.feed.plug(Bacon.fromPromise(promise));
+				var promise = spec.perform.apply(base, arguments);
+				action.feed.plug(Bacon.fromPromise(promise));
 				return promise;
 			}
 		};
-		return result;
+		return _.extend(base, spec, action);
 	}
 };
