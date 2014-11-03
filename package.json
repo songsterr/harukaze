@@ -1,0 +1,30 @@
+{
+  "name": "harukaze",
+  "version": "0.0.1",
+  "description": "A reactive flux architecture implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eploko/harukaze.git"
+  },
+  "keywords": [
+    "flux",
+    "react",
+    "facebook",
+    "dispatcher",
+    "reactive",
+    "bacon",
+    "frp",
+    "immutable",
+    "stateless"
+  ],
+  "author": "Andrey Subbotin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eploko/harukaze/issues"
+  },
+  "homepage": "https://github.com/eploko/harukaze"
+}
