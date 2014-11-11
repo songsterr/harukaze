@@ -1,6 +1,6 @@
 {
   "name": "harukaze",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A reactive flux architecture implementation",
   "main": "index.js",
   "scripts": {
