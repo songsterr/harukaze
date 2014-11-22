@@ -30,6 +30,6 @@
   "dependencies": {
     "baconjs": "^0.7.28",
     "es6-promise": "^2.0.0",
-    "underscore": "^1.7.0"
+    "lodash": "^2.4.1"
   }
 }
