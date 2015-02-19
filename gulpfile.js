@@ -15,7 +15,7 @@ var getBundleName = function () {
 };
 
 gulp.task('clean', function () {
-  return gulp.src('build', { read: false }).pipe($.clean());
+  return gulp.src('dist', { read: false }).pipe($.clean());
 });
 
 gulp.task('build', function () {
