@@ -1,6 +1,6 @@
 {
   "name": "harukaze",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A reactive flux architecture implementation",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,13 @@
   "dependencies": {
     "baconjs": "^0.7.37",
     "es6-promise": "^2.0.0",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "react": "~0.12.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-clean": "^0.3.1",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-util": "^3.0.3"
   }
 }
