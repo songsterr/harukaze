@@ -8,10 +8,10 @@ var fs = require('fs');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
+var cfg = require('./package.json');
+
 var getBundleName = function () {
-  var version = require('./package.json').version;
-  var name = require('./package.json').name;
-  return version + '.' + name + '.' + 'min';
+  return cfg.name + '-' + cfg.version;
 };
 
 gulp.task('clean', function () {
@@ -21,7 +21,8 @@ gulp.task('clean', function () {
 gulp.task('build', function () {
   var bundler = browserify({
     entries: ['./index.js'],
-    debug: true
+    debug: true,
+    standalone: cfg.name
   });
 
   var bundle = function() {
@@ -30,13 +31,32 @@ gulp.task('build', function () {
       .pipe(source(getBundleName() + '.js'))
       .pipe(buffer())
       .pipe($.sourcemaps.init({loadMaps: true}))
-        // Add transformation tasks to the pipeline here.
-        .pipe($.uglify())
       .pipe($.sourcemaps.write('./'))
-      .pipe(gulp.dest('./dist/amd/'));
+      .pipe(gulp.dest('./dist/'));
   };
 
   return bundle();
 });
 
-gulp.task('default', ['build']);
+gulp.task('build:minified', function () {
+  var bundler = browserify({
+    entries: ['./index.js'],
+    debug: true,
+    standalone: cfg.name
+  });
+
+  var bundle = function() {
+    return bundler
+      .bundle()
+      .pipe(source(getBundleName() + '.min.js'))
+      .pipe(buffer())
+      .pipe($.sourcemaps.init({loadMaps: true}))
+      .pipe($.uglify())
+      .pipe($.sourcemaps.write('./'))
+      .pipe(gulp.dest('./dist/'));
+  };
+
+  return bundle();
+});
+
+gulp.task('default', ['build', 'build:minified']);
