@@ -10,7 +10,11 @@ var buffer = require('vinyl-buffer');
 
 var cfg = require('./package.json');
 
-var getBundleName = function () {
+function capitalise(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getBundleName() {
   return cfg.name + '-' + cfg.version;
 };
 
@@ -18,12 +22,16 @@ gulp.task('clean', function () {
   return gulp.src('dist', { read: false }).pipe($.clean());
 });
 
+var browserifyConfig = {
+  entries: ['./index.js'],
+  debug: true,
+  standalone: capitalise(cfg.name),
+  external: ['lodash', 'react', 'baconjs'],
+  bundleExternal: false,
+};
+
 gulp.task('build', function () {
-  var bundler = browserify({
-    entries: ['./index.js'],
-    debug: true,
-    standalone: cfg.name
-  });
+  var bundler = browserify(browserifyConfig);
 
   var bundle = function() {
     return bundler
@@ -39,11 +47,7 @@ gulp.task('build', function () {
 });
 
 gulp.task('build:minified', function () {
-  var bundler = browserify({
-    entries: ['./index.js'],
-    debug: true,
-    standalone: cfg.name
-  });
+  var bundler = browserify(browserifyConfig);
 
   var bundle = function() {
     return bundler
