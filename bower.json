@@ -1,0 +1,37 @@
+{
+  "name": "harukaze",
+  "main": "dist/harukaze.js",
+  "version": "0.2.0",
+  "homepage": "https://github.com/songsterr/harukaze",
+  "authors": [
+    "Andrey Subbotin <andrey@subbotin.me>"
+  ],
+  "description": "A reactive flux architecture implementation",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "flux",
+    "react",
+    "facebook",
+    "dispatcher",
+    "reactive",
+    "bacon",
+    "frp",
+    "immutable",
+    "stateless"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "harukaze.js",
+    "lib",
+    "package.json",
+    "gulpfile.js"
+  ]
+}
