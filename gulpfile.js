@@ -25,8 +25,10 @@ gulp.task('clean', function () {
 gulp.task('build', function () {
   return gulp.src(cfg.main)
     .pipe($.sourcemaps.init({loadMaps: true}))
+    .pipe($.babel())
     .pipe($.pureCjs(pureConfig))
-    .pipe($.sourcemaps.write('./'))
+    .pipe($.concat('harukaze.js'))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('./dist/'));
 });
 
