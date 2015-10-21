@@ -1,9 +1,9 @@
 import Logger from './Logger';
 
 export function action(name, fn) {
-  return () => {
-    Logger.logActionStart(name, arguments);
-    const promise = fn.apply(action, arguments);
+  return (...args) => {
+    Logger.logActionStart(name, args);
+    const promise = fn.apply(null, args);
     Logger.logActionPromiseResult(name, promise);
     return promise;
   };
