@@ -1,65 +1,62 @@
-var _ = require('lodash');
-var Bacon = require('baconjs');
-var logger = require('./logger');
+import * as _ from 'lodash';
+import Bacon from 'baconjs';
+import logger from './logger';
 
-var bus = new Bacon.Bus();
-var dirtyStores = [];
-var dispatching = false;
-
-function dispatch(type, payload) {
-  if (dispatching) {
-    return Promise.reject('Cascading dispatches are prohibited. Fix your flux.');
+class Dispatcher {
+  constructor() {
+    this.bus = new Bacon.Bus();
+    this.dirtyStores = [];
+    this.dispatching = false;
   }
-  return new Promise(function (resolve, reject) {
-    dispatching = true;
-    logger.logMessage(type, payload);
-    try {
-      bus.push({type: type, payload: payload});
-      pushChanges();
-      resolve();
-    } finally {
-      logger.logMessageEnd();
-      dispatching = false;
+
+  _pushChangesOnce() {
+    const stores = this.dirtyStores;
+    this.dirtyStores = [];
+    _.each(stores, (store) => {
+      store.changes.push(store.output);
+    });
+  }
+
+  _pushChanges() {
+    if (!this.dirtyStores.length) {
+      logger.logNoDirtyStores();
+      return;
     }
-  });
-}
+    let also = false;
+    while (this.dirtyStores.length > 0) {
+      logger.logDirtyStores(this.dirtyStores, also);
+      this._pushChangesOnce();
+      also = true;
+    }
+  }
 
-function input(type) {
-  var payloads = bus.filter(function (msg) {
-     return msg.type === type;
-  }).map('.payload');
-  return payloads;
-}
+  dispatch(type, payload) {
+    if (this.dispatching) {
+      return Promise.reject('Cascading dispatches are prohibited. Fix your flux.');
+    }
+    return new Promise((resolve) => {
+      this.dispatching = true;
+      logger.logMessage(type, payload);
+      try {
+        this.bus.push({type: type, payload: payload});
+        this._pushChanges();
+        resolve();
+      } finally {
+        logger.logMessageEnd();
+        this.dispatching = false;
+      }
+    });
+  }
 
-function markStoreAsDirty(store) {
-  if (!_.contains(dirtyStores, store)) {
-    dirtyStores.push(store);    
+  input(type) {
+    return this.bus.filter(msg => msg.type === type).map('.payload');
+  }
+
+  markStoreAsDirty(store) {
+    if (!_.contains(this.dirtyStores, store)) {
+      this.dirtyStores.push(store);
+    }
   }
 }
 
-function pushChangesOnce() {
-  var stores = dirtyStores;
-  dirtyStores = [];
-  _.each(stores, function (store) {
-    store.changes.push(store.output);      
-  });
-}
-
-function pushChanges() {
-  if (!dirtyStores.length) {
-    logger.logNoDirtyStores();
-    return;
-  }
-  var also = false;
-  while(dirtyStores.length > 0) {
-    logger.logDirtyStores(dirtyStores, also);
-    pushChangesOnce();
-    also = true;
-  }
-}
-
-module.exports = {
-  dispatch: dispatch,
-  input: input,
-  markStoreAsDirty: markStoreAsDirty
-};
+export default new Dispatcher();

@@ -1,6 +1,6 @@
-var _ = require('lodash');
-var Bacon = require('baconjs');
-var dispatcher = require('./dispatcher');
+import * as _ from 'lodash';
+import Bacon from 'baconjs';
+import Dispatcher from './Dispatcher';
 
 function store(displayName, spec) {
   var changes = new Bacon.Bus();  
@@ -12,7 +12,7 @@ function store(displayName, spec) {
   
   var methods = gatherStoreMethods(spec);
   bindStoreMethods(spec, obj, methods);
-  wireStore(spec, obj, dispatcher.input);
+  wireStore(spec, obj, Dispatcher.input.bind(Dispatcher));
   return obj;
 }
 
@@ -33,7 +33,7 @@ function wireStore(spec, store, input) {
     stream.onValue(function (value) {
       if (store.output[property] != value) {
         store.output[property] = value;
-        dispatcher.markStoreAsDirty(store);        
+        Dispatcher.markStoreAsDirty(store);        
       }
     });
   }
