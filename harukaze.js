@@ -1,11 +1,9 @@
-var _ = require('lodash');
+import * as _ from 'lodash';
 
-var debug = require('./lib/debug');
-var store = require('./lib/store');
-var actions = require('./lib/actions');
-var messages = require('./lib/messages');
-var mixin = require('./lib/mixin');
+import debug from './lib/debug';
+import store from './lib/store';
+import actions from './lib/actions';
+import messages from './lib/messages';
+import Mixin from './lib/mixin';
 
-module.exports = _.extend({}, debug, store, actions, messages, {
-  Mixin: mixin
-});
+module.exports = _.extend({}, debug, store, actions, messages, { Mixin });
