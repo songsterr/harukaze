@@ -1,10 +1,10 @@
-import {logActionStart, logActionPromiseResult} from './logger';
+import Logger from './Logger';
 
 export function action(name, fn) {
   return () => {
-    logActionStart(name, arguments);
+    Logger.logActionStart(name, arguments);
     const promise = fn.apply(action, arguments);
-    logActionPromiseResult(name, promise);
+    Logger.logActionPromiseResult(name, promise);
     return promise;
   };
 }

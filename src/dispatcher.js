@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import Bacon from 'baconjs';
-import logger from './logger';
+import Logger from './Logger';
 
 class Dispatcher {
   constructor() {
@@ -19,12 +19,12 @@ class Dispatcher {
 
   _pushChanges() {
     if (!this.dirtyStores.length) {
-      logger.logNoDirtyStores();
+      Logger.logNoDirtyStores();
       return;
     }
     let also = false;
     while (this.dirtyStores.length > 0) {
-      logger.logDirtyStores(this.dirtyStores, also);
+      Logger.logDirtyStores(this.dirtyStores, also);
       this._pushChangesOnce();
       also = true;
     }
@@ -36,13 +36,13 @@ class Dispatcher {
     }
     return new Promise((resolve) => {
       this.dispatching = true;
-      logger.logMessage(type, payload);
+      Logger.logMessage(type, payload);
       try {
         this.bus.push({type: type, payload: payload});
         this._pushChanges();
         resolve();
       } finally {
-        logger.logMessageEnd();
+        Logger.logMessageEnd();
         this.dispatching = false;
       }
     });
