@@ -1,5 +1,3 @@
-'use strict';
-
 var dispatcher = require('./dispatcher');
 
 function message(type) {
@@ -9,4 +7,3 @@ function message(type) {
 module.exports = {
   message: message
 };
-//# sourceMappingURL=messages.js.map

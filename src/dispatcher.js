@@ -1,5 +1,3 @@
-'use strict';
-
 var _ = require('lodash');
 var Bacon = require('baconjs');
 var logger = require('./logger');
@@ -16,7 +14,7 @@ function dispatch(type, payload) {
     dispatching = true;
     logger.logMessage(type, payload);
     try {
-      bus.push({ type: type, payload: payload });
+      bus.push({type: type, payload: payload});
       pushChanges();
       resolve();
     } finally {
@@ -28,14 +26,14 @@ function dispatch(type, payload) {
 
 function input(type) {
   var payloads = bus.filter(function (msg) {
-    return msg.type === type;
+     return msg.type === type;
   }).map('.payload');
   return payloads;
 }
 
 function markStoreAsDirty(store) {
   if (!_.contains(dirtyStores, store)) {
-    dirtyStores.push(store);
+    dirtyStores.push(store);    
   }
 }
 
@@ -43,7 +41,7 @@ function pushChangesOnce() {
   var stores = dirtyStores;
   dirtyStores = [];
   _.each(stores, function (store) {
-    store.changes.push(store.output);
+    store.changes.push(store.output);      
   });
 }
 
@@ -53,7 +51,7 @@ function pushChanges() {
     return;
   }
   var also = false;
-  while (dirtyStores.length > 0) {
+  while(dirtyStores.length > 0) {
     logger.logDirtyStores(dirtyStores, also);
     pushChangesOnce();
     also = true;
@@ -65,4 +63,3 @@ module.exports = {
   input: input,
   markStoreAsDirty: markStoreAsDirty
 };
-//# sourceMappingURL=dispatcher.js.map

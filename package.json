@@ -2,11 +2,11 @@
   "name": "harukaze",
   "version": "0.3.0",
   "description": "A reactive flux architecture implementation",
-  "main": "dist/harukaze.js",
+  "main": "lib/harukaze.js",
   "scripts": {
-    "clean": "rm -rf ./dist",
-    "dist": "mkdir -p dist && babel harukaze.js --out-file dist/harukaze.js --source-maps true",
-    "prepublish": "npm run dist"
+    "clean": "rm -rf ./lib",
+    "build": "mkdir lib && babel src --out-dir lib --source-maps true",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
