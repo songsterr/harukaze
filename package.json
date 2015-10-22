@@ -13,14 +13,14 @@
     "url": "https://github.com/songsterr/harukaze.git"
   },
   "keywords": [
-    "flux",
-    "react",
-    "facebook",
-    "dispatcher",
-    "reactive",
     "bacon",
+    "dispatcher",
+    "facebook",
+    "flux",
     "frp",
     "immutable",
+    "react",
+    "reactive",
     "stateless"
   ],
   "author": "Andrey Subbotin",
