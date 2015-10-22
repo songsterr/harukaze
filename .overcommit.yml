@@ -34,3 +34,8 @@
 PreCommit:
   EsLint:
     enabled: true
+    
+PostCommit:
+  LolCommits:
+    enabled: true
+    description: Preserving this moment in history.
