@@ -1,6 +1,6 @@
-import Logger from './Logger';
+import Logger from './logger';
 
-export function action(name, fn) {
+function action(name, fn) {
   return (...args) => {
     Logger.logActionStart(name, args);
     const promise = fn.apply(null, args);
@@ -9,4 +9,4 @@ export function action(name, fn) {
   };
 }
 
-export default { action };
+export default action;

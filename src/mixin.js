@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-export default {
+const Mixin = {
   wire(store, arg) {
     const component = this;
     const harukaze = this._harukaze = this._harukaze || {};
@@ -27,3 +27,5 @@ export default {
     }
   },
 };
+
+export default Mixin;

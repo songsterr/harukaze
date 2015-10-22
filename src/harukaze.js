@@ -1,7 +1,7 @@
-import Logger from './Logger';
+import action from './action';
+import message from './message';
 import store from './store';
-import actions from './actions';
-import { message } from './message';
 import Mixin from './mixin';
+import Logger from './logger';
 
-module.exports = Object.assign({}, store, actions, { Logger, message, Mixin });
+export default { action, message, store, Mixin, Logger };

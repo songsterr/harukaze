@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import Bacon from 'baconjs';
-import Logger from './Logger';
+import Logger from './logger';
 
 class Dispatcher {
   constructor() {
@@ -12,7 +12,7 @@ class Dispatcher {
   _pushChangesOnce() {
     const stores = this.dirtyStores;
     this.dirtyStores = [];
-    _.each(stores, (store) => {
+    _.each(stores, store => {
       store.changes.push(store.output);
     });
   }
@@ -34,7 +34,7 @@ class Dispatcher {
     if (this.dispatching) {
       return Promise.reject('Cascading dispatches are prohibited. Fix your flux.');
     }
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       this.dispatching = true;
       Logger.logMessage(type, payload);
       try {

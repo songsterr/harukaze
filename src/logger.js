@@ -22,10 +22,10 @@ class Logger {
 
   logActionPromiseResult(name, promise) {
     if (!this.enabled) { return; }
-    promise.then((res) => {
+    promise.then(res => {
       console.log('[OK] %o', res);
       console.groupEnd();
-    }, (err) => {
+    }, err => {
       if (err.stack) {
         console.log('[ERR, RETHROWN] %s', err);
         process.nextTick(function rethrow() { throw err; });
